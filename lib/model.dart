@@ -13,6 +13,7 @@ enum OverlayFormat {
   ///SIM cards
   simID000
 }
+
 enum OverlayOrientation { landscape, portrait }
 
 abstract class OverlayModel {
@@ -52,3 +53,7 @@ class CardOverlay implements OverlayModel {
     }
   }
 }
+
+double ratiowidth = 0.8;
+double ratioheight = 0.6;
+double radius = 10;
