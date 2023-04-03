@@ -43,6 +43,7 @@ class _FlutterCameraOverlayState extends State<CameraOverlay> {
 
   @override
   Widget build(BuildContext context) {
+    var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
     return FutureBuilder<List<CameraDescription>?>(
         future: availableCameras(),
         builder: (context, snapshot) {
@@ -114,6 +115,10 @@ class _FlutterCameraOverlayState extends State<CameraOverlay> {
                             ),
                           ),
                         ),
+                        Text(
+                          'Orientation: $isPortrait',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ],
                     );
                   }
@@ -146,7 +151,9 @@ class _FlutterCameraOverlayState extends State<CameraOverlay> {
       height: newHeight,
     );
 
-    File(file.path).writeAsBytes(encodePng(cropOne)).then((value) {
+    img.Image rotaOne = img.copyRotate(cropOne, angle: -90);
+
+    File(file.path).writeAsBytes(encodePng(rotaOne)).then((value) {
       widget.onCapture(XFile(file.path));
     });
   }
