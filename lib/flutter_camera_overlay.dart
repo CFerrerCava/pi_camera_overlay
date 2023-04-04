@@ -43,7 +43,6 @@ class _FlutterCameraOverlayState extends State<CameraOverlay> {
 
   @override
   Widget build(BuildContext context) {
-    var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
     return FutureBuilder<List<CameraDescription>?>(
         future: availableCameras(),
         builder: (context, snapshot) {
@@ -98,8 +97,8 @@ class _FlutterCameraOverlayState extends State<CameraOverlay> {
                               child: IconButton(
                                 enableFeedback: true,
                                 color: Colors.white,
-                                onPressed: () {
-                                  _onCapture();
+                                onPressed: () async {
+                                  await _onCapture();
                                 },
                                 iconSize: 50,
                                 icon: Container(
@@ -115,10 +114,6 @@ class _FlutterCameraOverlayState extends State<CameraOverlay> {
                             ),
                           ),
                         ),
-                        Text(
-                          'Orientation: $isPortrait',
-                          style: TextStyle(color: Colors.white),
-                        ),
                       ],
                     );
                   }
@@ -129,7 +124,7 @@ class _FlutterCameraOverlayState extends State<CameraOverlay> {
         });
   }
 
-  void _onCapture() async {
+  Future<void> _onCapture() async {
     for (int i = 10; i > 0; i--) {
       await HapticFeedback.vibrate();
     }
